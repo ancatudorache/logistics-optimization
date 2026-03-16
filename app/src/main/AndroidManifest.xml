@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LogisticsOptimization">
         <activity
+            android:name=".AddDeliveryActivity"
+            android:exported="false" />
+        <activity
             android:name=".ActiveDeliveryActivity"
             android:exported="false" />
         <activity
