@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LogisticsOptimization">
         <activity
+            android:name=".DriverDashboardActivity"
+            android:exported="false" />
+        <activity
             android:name=".DispatcherDashboardAcivity"
             android:exported="false" />
         <activity
