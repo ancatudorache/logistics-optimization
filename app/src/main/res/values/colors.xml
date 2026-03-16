@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="primary">#1E3A5F</color>
-    <color name="primary_variant">#162A45</color>
-
     <color name="secondary">#F59E0B</color>
-
     <color name="background">#F4F6F8</color>
-
     <color name="text_primary">#1F2937</color>
-
     <color name="white">#FFFFFF</color>
-
 </resources>
