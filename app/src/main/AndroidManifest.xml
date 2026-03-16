@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LogisticsOptimization">
         <activity
+            android:name=".AddDriverActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddVehicleActivity"
             android:exported="false" />
         <activity
