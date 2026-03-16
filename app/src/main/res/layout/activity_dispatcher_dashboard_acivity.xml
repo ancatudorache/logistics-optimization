@@ -65,7 +65,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:src="@android:drawable/ic_menu_send"
-                    android:tint="@color/primary" />
+                    app:tint="@color/primary" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -114,7 +114,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:src="@android:drawable/ic_menu_directions"
-                    android:tint="@color/primary" />
+                    app:tint="@color/primary" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -163,7 +163,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:src="@android:drawable/ic_menu_myplaces"
-                    android:tint="@color/secondary" />
+                    app:tint="@color/secondary" />
 
                 <LinearLayout
                     android:layout_width="0dp"
