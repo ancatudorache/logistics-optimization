@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:background="@color/background"
     android:fitsSystemWindows="true"
-    tools:context=".DispatcherDashboardAcivity">
+    tools:context=".DispatcherDashboardActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBar"
