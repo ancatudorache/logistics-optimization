@@ -16,7 +16,7 @@
         app:title="Logistics Optimization"
         app:titleCentered="true"
         app:titleTextColor="@color/white"
-        app:navigationIcon="@drawable/baseline_local_shipping_24"
+        app:navigationIcon="?attr/homeAsUpIndicator"
         app:navigationIconTint="@color/white" />
 
     <ScrollView
@@ -106,7 +106,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Plate Number: B123XYZ"
+                        android:text="Plate Number: X"
                         android:textColor="#6B7280"
                         android:textSize="15sp" />
 

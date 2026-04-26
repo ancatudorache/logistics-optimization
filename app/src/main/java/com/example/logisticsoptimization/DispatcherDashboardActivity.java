@@ -9,7 +9,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class DispatcherDashboardActivity extends AppCompatActivity {
+public class DispatcherDashboardActivity extends BaseActivity {
     TextView tvWelcome;
 
     @Override

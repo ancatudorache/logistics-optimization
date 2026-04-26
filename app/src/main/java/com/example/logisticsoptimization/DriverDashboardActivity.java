@@ -28,7 +28,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DriverDashboardActivity extends AppCompatActivity {
+public class DriverDashboardActivity extends BaseActivity {
     TextView tvWelcome;
     RecyclerView recyclerViewDeliveries;
     List<Delivery> deliveryList = new ArrayList<>();
@@ -55,8 +55,24 @@ public class DriverDashboardActivity extends AppCompatActivity {
         }
         
         recyclerViewDeliveries = findViewById(R.id.recyclerViewDeliveries);
-        adapter = new DeliveryAdapter(this, deliveryList, delivery -> {
-            this.selectedDelivery = delivery;
+//        adapter = new DeliveryAdapter(this, deliveryList, delivery -> {
+//            this.selectedDelivery = delivery;
+//        });
+        adapter = new DeliveryAdapter(this, deliveryList, new DeliveryAdapter.OnDeliveryClickListener() {
+            @Override
+            public void onDeliveryClick(Delivery delivery) {
+                selectedDelivery = delivery;
+            }
+
+            @Override
+            public void onViewDetailsClick(Delivery delivery) {
+                Intent intent = new Intent(DriverDashboardActivity.this, DeliveryDetailsActivity.class);
+                intent.putExtra("deliveryId", delivery.getId());
+                intent.putExtra("pickupAddress", delivery.getPickupAddress());
+                intent.putExtra("deliveryAddress", delivery.getDeliveryAddress());
+                intent.putExtra("deadline", delivery.getDeadline());
+                startActivity(intent);
+            }
         });
         
         recyclerViewDeliveries.setLayoutManager(new LinearLayoutManager(this));

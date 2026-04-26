@@ -8,7 +8,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class AddVehicleActivity extends AppCompatActivity {
+public class AddVehicleActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

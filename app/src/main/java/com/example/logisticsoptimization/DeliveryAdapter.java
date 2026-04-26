@@ -1,6 +1,7 @@
 package com.example.logisticsoptimization;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.Delive
 
     public interface OnDeliveryClickListener {
         void onDeliveryClick(Delivery delivery);
+        void onViewDetailsClick(Delivery delivery);
     }
 
     @NonNull
@@ -74,6 +76,9 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.Delive
                 listener.onDeliveryClick(delivery);
             }
         });
+        holder.btnViewDetails.setOnClickListener(v -> {
+            listener.onViewDetailsClick(deliveryList.get(position));
+        });
     }
 
     @Override
@@ -85,6 +90,7 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.Delive
         TextView tvRoute;
         TextView tvDeadline;
         MaterialButton btnViewDetails;
+
         MaterialCardView cardView;
 
         public DeliveryViewHolder(@NonNull View itemView) {
@@ -94,5 +100,7 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.Delive
             btnViewDetails = itemView.findViewById(R.id.btnViewDetails);
             cardView = (MaterialCardView) itemView;
         }
+
+
     }
 }

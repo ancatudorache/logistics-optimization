@@ -8,7 +8,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class AddDeliveryActivity extends AppCompatActivity {
+public class AddDeliveryActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
