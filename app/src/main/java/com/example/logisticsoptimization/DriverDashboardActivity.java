@@ -55,9 +55,7 @@ public class DriverDashboardActivity extends BaseActivity {
         }
         
         recyclerViewDeliveries = findViewById(R.id.recyclerViewDeliveries);
-//        adapter = new DeliveryAdapter(this, deliveryList, delivery -> {
-//            this.selectedDelivery = delivery;
-//        });
+
         adapter = new DeliveryAdapter(this, deliveryList, new DeliveryAdapter.OnDeliveryClickListener() {
             @Override
             public void onDeliveryClick(Delivery delivery) {

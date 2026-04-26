@@ -258,20 +258,6 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnBack"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="20dp"
-                android:text="Back"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:backgroundTint="@color/secondary"
-                app:cornerRadius="14dp" />
-
         </LinearLayout>
 
     </ScrollView>
