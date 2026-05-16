@@ -108,8 +108,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 },
                 error -> {
+                    String errorMsg = "Eroare necunoscuta";
+                    if (error.networkResponse != null) {
+                        errorMsg = "Status: " + error.networkResponse.statusCode;
+                    } else if (error.getMessage() != null) {
+                        errorMsg = error.getMessage();
+                    }
+                    Log.e("LOGIN", "Error: " + errorMsg);
                     Toast.makeText(MainActivity.this, "Username sau parola incorecte", Toast.LENGTH_SHORT).show();
-
                 }
         ) {};
         Volley.newRequestQueue(this).add(request);
