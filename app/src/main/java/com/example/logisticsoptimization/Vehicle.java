@@ -1,6 +1,8 @@
 package com.example.logisticsoptimization;
 
-public class Vehicle {
+import java.io.Serializable;
+
+public class Vehicle implements Serializable {
     private int id;
     private String model;
     private String plateNumber;

@@ -38,21 +38,31 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.material.button.MaterialButton;
 import com.google.maps.android.PolyUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ActiveDeliveryActivity extends BaseActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private String pickupAddress;
     private String deliveryAddress;
+    private int deliveryId;
     private FusedLocationProviderClient fusedLocationClient;
     private LocationCallback locationCallback;
     private Marker currentLocationMarker;
+    private int vehicleId;
+    MaterialButton btnFinishDelivery;
+    private double fuelConsumption;
+    private String fuelType;
+    private long startTime;
+    private double fuelPrice;
+    private List<LatLng> traveledPath = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,15 +76,100 @@ public class ActiveDeliveryActivity extends BaseActivity implements OnMapReadyCa
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+        btnFinishDelivery=findViewById(R.id.btnFinishDelivery);
         pickupAddress = getIntent().getStringExtra("pickupAddress");
         deliveryAddress = getIntent().getStringExtra("deliveryAddress");
+        vehicleId=getIntent().getIntExtra("vehicleId",-1);
+        deliveryId=getIntent().getIntExtra("deliveryId",-1);
+        fuelConsumption=getIntent().getDoubleExtra("fuelConsumption",-1);
+        fuelType=getIntent().getStringExtra("fuelType");
+        fuelPrice=getIntent().getDoubleExtra("fuelPrice",-1);
+        if (deliveryId > 0) {
+            startDelivery(deliveryId);
+        }
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.mapFragment);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
+        startTime = System.currentTimeMillis();
+        btnFinishDelivery.setOnClickListener(v -> {
+            finishDelivery();
+        });
+    }
+
+    private void finishDelivery() {
+        long actualTimeMillis = System.currentTimeMillis() - startTime;
+        int actualTimeMinutes = (int) (actualTimeMillis / 60000);
+        double actualDistanceKm = calculateTotalDistance();
+        double actualCost = (actualDistanceKm * fuelConsumption * fuelPrice) / 100;
+
+        Log.d("FINISH", "Actual time: " + actualTimeMinutes + " min");
+        Log.d("FINISH", "Actual distance: " + actualDistanceKm + " km");
+        Log.d("FINISH", "Actual cost: " + actualCost + " RON");
+
+        String url = "http://192.168.0.193:3000/api/deliveries/" + deliveryId + "/finish";
+
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("actual_time", actualTimeMinutes);
+            jsonBody.put("actual_distance", actualDistanceKm);
+            jsonBody.put("actual_cost", actualCost);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                jsonBody,
+                response -> {
+                    Toast.makeText(this, "Livrare finalizată!", Toast.LENGTH_SHORT).show();
+                    finish(); // închide activitatea
+                },
+                error -> {
+                    Toast.makeText(this, "Eroare la finalizare!", Toast.LENGTH_SHORT).show();
+                    Log.e("FINISH", "Error: " + error.toString());
+                }
+        ) {};
+
+        Volley.newRequestQueue(this).add(request);
+
+    }
+
+
+    private double calculateTotalDistance() {
+        double totalDistance = 0;
+        for (int i = 0; i < traveledPath.size() - 1; i++) {
+            LatLng start = traveledPath.get(i);
+            LatLng end = traveledPath.get(i + 1);
+
+            // Distanța între două puncte GPS (în metri)
+            float[] results = new float[1];
+            Location.distanceBetween(
+                    start.latitude, start.longitude,
+                    end.latitude, end.longitude,
+                    results
+            );
+            totalDistance += results[0];
+        }
+        return totalDistance / 1000.0;  // convertește în km
+    }
+
+    private void startDelivery(int deliveryId) {
+        String url = "http://192.168.0.193:3000/api/deliveries/" + deliveryId + "/start";
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                null,
+                response -> Log.d("DELIVERY", "Started successfully"),
+                error -> Log.e("DELIVERY", "Error starting: " + error.toString())
+        ) {};
+
+        Volley.newRequestQueue(this).add(request);
     }
 
     @Override
@@ -117,6 +212,7 @@ public class ActiveDeliveryActivity extends BaseActivity implements OnMapReadyCa
     private boolean firstLocationUpdate = true;
 
     private void updateCurrentLocation(LatLng latLng) {
+        traveledPath.add(latLng);  // salvează poziția
 
         if (currentLocationMarker == null) {
             // primul marker - pozitia curenta
@@ -264,6 +360,8 @@ private void geocodeAddress(String address, OnGeocodedListener listener) {
 
     Volley.newRequestQueue(this).add(request);
 }
+
+
 
     public interface OnGeocodedListener {
         void onGeocoded(LatLng latLng);

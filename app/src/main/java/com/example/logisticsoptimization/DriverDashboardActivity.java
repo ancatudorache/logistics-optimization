@@ -85,6 +85,9 @@ public class DriverDashboardActivity extends BaseActivity {
                 intent.putExtra("pickupAddress", selectedDelivery.getPickupAddress());
                 intent.putExtra("deliveryAddress", selectedDelivery.getDeliveryAddress());
                 intent.putExtra("deadline", selectedDelivery.getDeadline());
+                intent.putExtra("fuelConsumption", selectedDelivery.getFuelConsumption());
+                intent.putExtra("fuelType", selectedDelivery.getFuelType());
+                intent.putExtra("fuelPrice", selectedDelivery.getFuelPrice());
                 startActivity(intent);
             } else {
                 Toast.makeText(this, "Please select a delivery first", Toast.LENGTH_SHORT).show();
@@ -114,7 +117,10 @@ public class DriverDashboardActivity extends BaseActivity {
                                     obj.getInt("id"),
                                     obj.getString("pickup_address"),
                                     obj.getString("delivery_address"),
-                                    obj.getString("deadline")
+                                    obj.getString("deadline"),
+                                    obj.getDouble("fuel_consumption"),
+                                    obj.getString("fuel_type"),
+                                    obj.getDouble("fuel_price")
                             );
                             deliveryList.add(delivery);
                         }
