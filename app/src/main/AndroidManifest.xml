@@ -49,8 +49,12 @@
             android:name=".DispatcherDashboardActivity"
             android:exported="false" />
         <activity
+            android:name=".ChangePasswordActivity"
+            android:exported="false"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

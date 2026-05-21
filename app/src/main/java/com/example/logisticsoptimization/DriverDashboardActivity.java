@@ -2,8 +2,10 @@ package com.example.logisticsoptimization;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +37,7 @@ public class DriverDashboardActivity extends BaseActivity {
     DeliveryAdapter adapter;
     Delivery selectedDelivery = null;
     MaterialButton btnStartDelivery;
+    Button btnChangePass;
     int userId;
 
     @SuppressLint("MissingInflatedId")
@@ -46,7 +49,9 @@ public class DriverDashboardActivity extends BaseActivity {
 
         tvWelcome = findViewById(R.id.tvWelcome);
         btnStartDelivery = findViewById(R.id.btnStartDelivery);
-        
+        btnChangePass=findViewById(R.id.changePassButton);
+
+
         String username = getIntent().getStringExtra("username");
         userId = getIntent().getIntExtra("userId", -1);
 
@@ -78,6 +83,7 @@ public class DriverDashboardActivity extends BaseActivity {
         
         loadDeliveries();
 
+
         btnStartDelivery.setOnClickListener(v -> {
             if (selectedDelivery != null) {
                 Intent intent = new Intent(DriverDashboardActivity.this, ActiveDeliveryActivity.class);
@@ -92,6 +98,20 @@ public class DriverDashboardActivity extends BaseActivity {
             } else {
                 Toast.makeText(this, "Please select a delivery first", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        btnChangePass.setOnClickListener(view -> {
+            SharedPreferences preferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+            int userId = preferences.getInt("userId", 0);
+
+            if (userId == 0) {
+                Toast.makeText(this, "Trebuie să te loghezi mai întâi!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Intent intent = new Intent(DriverDashboardActivity.this, ChangePasswordActivity.class);
+            intent.putExtra("userId", userId);
+            startActivity(intent);
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

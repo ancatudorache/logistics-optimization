@@ -2,8 +2,10 @@ package com.example.logisticsoptimization;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     TextInputEditText usernameInputText;
     TextInputEditText passwordInputText;
     MaterialButton btnLogin;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,13 +41,44 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        SharedPreferences prefs = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        boolean isLoggedIn = prefs.getBoolean("isLoggedIn", false);
+
+        if (isLoggedIn) {
+            String role = prefs.getString("role", "");
+            String name = prefs.getString("name", "");
+            int userId = prefs.getInt("userId", -1);
+
+            if (role.equals("manager")) {
+                Intent intent = new Intent(MainActivity.this, ManagerDashboardActivity.class);
+                intent.putExtra("username", name);
+                startActivity(intent);
+                finish();
+            } else if (role.equals("dispatcher")) {
+                Intent intent = new Intent(MainActivity.this, DispatcherDashboardActivity.class);
+                intent.putExtra("username", name);
+                startActivity(intent);
+                finish();
+            } else if (role.equals("driver")) {
+                Intent intent = new Intent(MainActivity.this, DriverDashboardActivity.class);
+                intent.putExtra("username", name);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
+                finish();
+            }
+
+        }
+
         btnLogin=findViewById(R.id.loginButton);
         usernameInputText = findViewById(R.id.usernameEditText);
         passwordInputText = findViewById(R.id.passwordEditText);
 
         btnLogin.setOnClickListener(view -> {
             loginUser();
+
         });
+
+
 
 
 
@@ -83,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         String role = response.getJSONObject("user").getString("role");
                         String name = response.getJSONObject("user").getString("name");
-                        int userId = response.getJSONObject("user").getInt("id");
+                         int userId = response.getJSONObject("user").getInt("id");
 
 
                         if (role.equals("manager")) {
@@ -103,6 +138,16 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         }
+
+                        SharedPreferences prefs = getSharedPreferences("user_prefs", MODE_PRIVATE);
+                        prefs.edit()
+                                .putString("name", name)
+                                .putInt("userId", userId)
+                                .putString("role", role)
+                                .putBoolean("isLoggedIn", true)
+                                .apply();
+
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
