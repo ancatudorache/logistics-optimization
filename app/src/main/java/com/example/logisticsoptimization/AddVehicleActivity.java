@@ -72,7 +72,7 @@ public class AddVehicleActivity extends BaseActivity {
 
     private void addVehicle(String modelVal, String capacityVal, String fuelConsumptionVal, String plateNumberVal, String accidentsVal, String fuelTypeVal) {
 
-        String url = "http://192.168.0.193:3000/api/vehicles";
+        String url = "http://192.168.1.245:3000/api/vehicles";
 
         JSONObject jsonBody = new JSONObject();
         try {
@@ -117,7 +117,7 @@ public class AddVehicleActivity extends BaseActivity {
 
     private void loadFuelTypes(AutoCompleteTextView fuelType) {
 
-        String url = "http://192.168.0.193:3000/api/fuel-types";
+        String url = "http://192.168.1.245:3000/api/fuel-types";
 
         JsonArrayRequest request = new JsonArrayRequest(
                 Request.Method.GET,

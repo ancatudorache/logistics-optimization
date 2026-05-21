@@ -54,7 +54,7 @@ public class AddDriverActivity extends BaseActivity {
     }
 
     private void addDriver(String name, String cnp, String username, String password) {
-        String url = "http://192.168.0.193:3000/api/drivers";
+        String url = "http://192.168.1.245:3000/api/drivers";
 
         JSONObject jsonBody = new JSONObject();
         try {

@@ -44,7 +44,7 @@ public class DeliveryDetailsActivity extends BaseActivity {
         });
 
         int deliveryId = getIntent().getIntExtra("deliveryId", -1);
-        String url = "http://192.168.0.193:3000/api/deliveries/"+deliveryId;
+        String url = "http://192.168.1.245:3000/api/deliveries/"+deliveryId;
         JsonArrayRequest request = new JsonArrayRequest(
                 Request.Method.GET,
                 url,

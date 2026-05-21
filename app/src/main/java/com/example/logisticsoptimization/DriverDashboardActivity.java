@@ -122,7 +122,7 @@ public class DriverDashboardActivity extends BaseActivity {
     }
 
     private void loadDeliveries() {
-        String url = "http://192.168.0.193:3000/api/deliveries/driver/" + userId;
+        String url = "http://192.168.1.245:3000/api/deliveries/driver/" + userId;
 
         JsonArrayRequest request = new JsonArrayRequest(
                 Request.Method.GET,

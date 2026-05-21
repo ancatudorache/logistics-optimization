@@ -107,7 +107,7 @@ public class AddDeliveryActivity extends BaseActivity {
     }
 
     private void loadDrivers() {
-        String url = "http://192.168.0.193:3000/api/drivers";
+        String url = "http://192.168.1.245:3000/api/drivers";
 
         JsonArrayRequest request = new JsonArrayRequest(
                 Request.Method.GET,
@@ -138,7 +138,7 @@ public class AddDeliveryActivity extends BaseActivity {
     }
 
     private void loadVehicles() {
-        String url = "http://192.168.0.193:3000/api/vehicles";
+        String url = "http://192.168.1.245:3000/api/vehicles";
 
         JsonArrayRequest request = new JsonArrayRequest(
                 Request.Method.GET,
@@ -220,7 +220,7 @@ public class AddDeliveryActivity extends BaseActivity {
     }
 
     private void calculateCost(double distanceKm, Vehicle vehicle, int estimatedTimeMinutes) {
-        String url = "http://192.168.0.193:3000/api/fuel-price/" + vehicle.getFuelType();
+        String url = "http://192.168.1.245:3000/api/fuel-price/" + vehicle.getFuelType();
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
@@ -258,7 +258,7 @@ public class AddDeliveryActivity extends BaseActivity {
         Log.d("SAVE", "estimatedTime: " + estimatedTimeMinutes);
         Log.d("SAVE", "estimatedCost: " + estimatedCost);
 
-        String url = "http://192.168.0.193:3000/api/deliveries";
+        String url = "http://192.168.1.245:3000/api/deliveries";
 
         JSONObject jsonBody = new JSONObject();
         try {
@@ -349,7 +349,7 @@ public class AddDeliveryActivity extends BaseActivity {
     }
 
 //    private void addDelivery(String address, String weight, int driverId, int vehicleId) {
-//        String url = "http://192.168.0.193:3000/api/deliveries";
+//        String url = "http://192.168.1.245:3000/api/deliveries";
 //
 //        JSONObject jsonBody = new JSONObject();
 //        try {

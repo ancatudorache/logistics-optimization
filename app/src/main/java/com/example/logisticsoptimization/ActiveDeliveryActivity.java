@@ -109,7 +109,7 @@ public class ActiveDeliveryActivity extends BaseActivity implements OnMapReadyCa
         Log.d("FINISH", "Actual distance: " + actualDistanceKm + " km");
         Log.d("FINISH", "Actual cost: " + actualCost + " RON");
 
-        String url = "http://192.168.0.193:3000/api/deliveries/" + deliveryId + "/finish";
+        String url = "http://192.168.1.245:3000/api/deliveries/" + deliveryId + "/finish";
 
         JSONObject jsonBody = new JSONObject();
         try {
@@ -159,7 +159,7 @@ public class ActiveDeliveryActivity extends BaseActivity implements OnMapReadyCa
     }
 
     private void startDelivery(int deliveryId) {
-        String url = "http://192.168.0.193:3000/api/deliveries/" + deliveryId + "/start";
+        String url = "http://192.168.1.245:3000/api/deliveries/" + deliveryId + "/start";
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,

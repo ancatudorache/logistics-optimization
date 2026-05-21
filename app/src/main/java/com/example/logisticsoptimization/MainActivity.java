@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             return;
         }
-        String url = "http://192.168.0.193:3000/api/login";
+        String url = "http://192.168.1.245:3000/api/login";
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
